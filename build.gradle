@@ -1,0 +1,72 @@
+plugins {
+    id 'eclipse'
+    id 'java-library'
+    id 'maven-publish'
+    id 'org.web3j' version '4.9.0'
+}
+
+group = 'eu.i3market.seedsindex'
+version = '2.0.0-SNAPSHOT'
+
+repositories {
+    maven {
+        url 'http://95.211.3.251:8081/repository/maven-central/'
+        allowInsecureProtocol true
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'org.web3j:core:4.9.0'
+
+    testImplementation 'junit:junit:4.13.2'
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+web3j {
+    generatedPackageName = 'eu.i3market.seedsindex.besu'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'seedsindex'
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'SEEDS Index'
+                description = 'SEEDS Index library'
+                url = 'https://gitlab.com/i3-market/code/wp4/seedsindex'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'i3market'
+            credentials(PasswordCredentials)
+            def releasesRepoUrl = 'http://95.211.3.251:8081/repository/maven-releases/'
+            def snapshotsRepoUrl = 'http://95.211.3.251:8081/repository/maven-snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            allowInsecureProtocol true
+        }
+    }
+}
