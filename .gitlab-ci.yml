@@ -8,7 +8,7 @@
 # https://gradle.org/
 # https://github.com/gradle/gradle
 
-image: gradle:alpine
+image: node:12-bullseye
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
 # is usually a priority over speed in CI environments. Using a fresh
@@ -23,7 +23,10 @@ before_script:
 
 build:
   stage: build
-  script: ./gradlew --build-cache assemble
+  script:
+    - apt-get update
+    - apt-get install -u openjdk-17-jdk-headless
+    - ./gradlew --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
