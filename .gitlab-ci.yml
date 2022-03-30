@@ -50,4 +50,7 @@ test:
 
 deploy:
     stage: deploy
-    script: ./gradlew deploy
+    script:
+      - apt-get update
+      - apt-get install -y openjdk-17-jdk-headless
+      - ./gradlew deploy
