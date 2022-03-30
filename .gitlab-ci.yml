@@ -43,4 +43,4 @@ test:
 
 deploy:
     stage: deploy
-    script: ./gradlew publish
+    script: ./gradlew publish -Pi3marketUsername="$NEXUS_USER" -Pi3marketPassword="$NEXUS_PASSWORD"
