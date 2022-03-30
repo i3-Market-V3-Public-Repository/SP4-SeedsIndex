@@ -8,8 +8,7 @@
 # https://gradle.org/
 # https://github.com/gradle/gradle
 
-# TODO: Find/create an image with OpenJDK 17 and Node 12
-image: node:12-bullseye
+image: registry.gitlab.com/i3-market/code/wp4/seedsindex:2.0.0-build
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
 # is usually a priority over speed in CI environments. Using a fresh
@@ -24,10 +23,7 @@ before_script:
 
 build:
   stage: build
-  script:
-    - apt-get update
-    - apt-get install -y openjdk-17-jdk-headless
-    - ./gradlew --build-cache assemble
+  script: ./gradlew --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
@@ -37,10 +33,7 @@ build:
 
 test:
   stage: test
-  script:
-    - apt-get update
-    - apt-get install -y openjdk-17-jdk-headless
-    - ./gradlew check
+  script: ./gradlew check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -50,7 +43,4 @@ test:
 
 deploy:
     stage: deploy
-    script:
-      - apt-get update
-      - apt-get install -y openjdk-17-jdk-headless
-      - ./gradlew deploy
+    script: ./gradlew deploy
