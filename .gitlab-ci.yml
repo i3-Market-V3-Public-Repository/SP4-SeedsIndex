@@ -8,6 +8,7 @@
 # https://gradle.org/
 # https://github.com/gradle/gradle
 
+# TODO: Find/create an image with OpenJDK 17 and Node 12
 image: node:12-bullseye
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
@@ -36,7 +37,10 @@ build:
 
 test:
   stage: test
-  script: ./gradlew check
+  script:
+    - apt-get update
+    - apt-get install -y openjdk-17-jdk-headless
+    - ./gradlew check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
