@@ -43,4 +43,4 @@ test:
 
 deploy:
     stage: deploy
-    script: ./gradlew deploy
+    script: ./gradlew publish
