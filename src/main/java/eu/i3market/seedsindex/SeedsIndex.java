@@ -87,8 +87,13 @@ public class SeedsIndex {
             throw new RuntimeException("Invalid private key");
         }
 
-        this.myNodeId = Hash.sha256(nodeCredentials.getEcKeyPair().getPublicKey().toByteArray());
-        log.info("Local node identifier (public key hash): {}", Numeric.toHexString(myNodeId));
+        byte[] myNodeId = new byte[32];
+        byte[] addressBytes = Numeric.hexStringToByteArray(nodeCredentials.getAddress());
+        for (int i = 0; i < addressBytes.length; i++) {
+            myNodeId[i + 12] = addressBytes[i];
+        }
+        this.myNodeId = Hash.sha256(myNodeId);
+        log.info("Local node identifier (sha256(address)): {}", Numeric.toHexString(myNodeId));
 
         log.info("Connecting to Besu node: {}", besuNodeAddress);
         web3j = Web3j.build(new HttpService(besuNodeAddress));

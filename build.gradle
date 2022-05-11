@@ -5,8 +5,13 @@ plugins {
     id 'org.web3j' version '4.9.0'
 }
 
+apply plugin: 'org.web3j'
+
 group = 'eu.i3market.seedsindex'
-version = '2.0.0-SNAPSHOT'
+version = '2.0.1-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
     maven {
@@ -19,14 +24,16 @@ repositories {
 dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'org.slf4j:slf4j-api:1.7.36'
-    implementation 'org.web3j:core:4.9.0'
-
-    testImplementation 'junit:junit:4.13.2'
+    implementation 'org.web3j:core:4.9.1'
 }
 
 java {
     withJavadocJar()
     withSourcesJar()
+}
+
+sourcesJar {
+    dependsOn 'generateContractWrappers'
 }
 
 web3j {
