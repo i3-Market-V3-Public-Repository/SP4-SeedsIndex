@@ -41,7 +41,7 @@ Include the dependency:
 ```
 dependencies {
     ...
-    implementation 'eu.i3market.seedsindex:seedsindex:2.0.0-SNAPSHOT'
+    implementation 'eu.i3market.seedsindex:seedsindex:2.0.1-SNAPSHOT'
     ....
 }
 ```
